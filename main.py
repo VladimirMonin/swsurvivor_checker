@@ -9,20 +9,20 @@
 
 Скриптовый стиль!
 
-feat: Добавлена вича (новый функционал)
-fix: Исправление ошибок
-docs: Документация
-refactor: Переработка кода
+Библиотека для системных уведомлений plyer
+# pip install plyer
 """
 
 
 import requests
 from bs4 import BeautifulSoup
-
+from plyer import notification
 
 URL = r'https://www.gamesvoice.ru/swsurvivor'
 XPATH = r'//*[@id="comp-lh1g6uej"]/h1/span/span/span/span'
 CSS_SELECTOR = r"#comp-lh1g6uej > h1 > span > span > span > span"
+MESSAGE = None
+
 # Делаем GET запрос на сайт
 response = requests.get(URL)
 
@@ -40,3 +40,20 @@ html = BeautifulSoup(response.text, 'html.parser')
 if html.select(CSS_SELECTOR)[0].text == 'Этот русификатор пока ещё недоступен':
     print('Русификатор еще не доступен')
 
+    MESSAGE = 'Русификатор еще не доступен'
+
+else:
+    print('Русификатор доступен')
+    MESSAGE = 'Русификатор доступен'
+
+
+# Отправляем уведомление
+
+
+notification.notify(
+    title=f'Star Wars Jedi: Survivor: {MESSAGE}',
+    message=MESSAGE,
+    app_name='GamesVoice',
+    app_icon=None,
+    timeout=10
+)
