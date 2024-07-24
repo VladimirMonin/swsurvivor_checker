@@ -8,16 +8,21 @@
 # pip install beautifulsoup4
 
 Скриптовый стиль!
+
+feat: Добавлена вича (новый функционал)
+fix: Исправление ошибок
+docs: Документация
+refactor: Переработка кода
 """
 
-from re import X
+
 import requests
 from bs4 import BeautifulSoup
 
 
-URL = 'https://www.gamesvoice.ru/swsurvivor'
-XPATH = '//*[@id="comp-lh1g6uej"]/h1/span/span/span/span'
-
+URL = r'https://www.gamesvoice.ru/swsurvivor'
+XPATH = r'//*[@id="comp-lh1g6uej"]/h1/span/span/span/span'
+CSS_SELECTOR = r"#comp-lh1g6uej > h1 > span > span > span > span"
 # Делаем GET запрос на сайт
 response = requests.get(URL)
 
@@ -28,10 +33,10 @@ else:
     print('Ошибка. Сайт недоступен')
     exit()
 
-# Анализируем полученный ответ, с помощью парсера, ищем элемент //*[@id="comp-lh1g6uej"]/h1/span/span/span/span
+# Анализируем полученный ответ, с помощью парсера, ищем элемент css Selector #comp-lh1g6uej > h1 > span > span > span > span
 html = BeautifulSoup(response.text, 'html.parser')
 
-# Проверяем наличие текста "Этот русификатор пока ещё недоступен" в элементе ХPATH
-if html.select_one(XPATH).text == 'Этот русификатор пока ещё недоступен':
+# Проверяем наличие текста "Этот русификатор пока ещё недоступен" в элементе СSS_SELECTOR
+if html.select(CSS_SELECTOR)[0].text == 'Этот русификатор пока ещё недоступен':
     print('Русификатор еще не доступен')
 
