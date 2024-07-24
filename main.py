@@ -54,6 +54,6 @@ notification.notify(
     title=f'Star Wars Jedi: Survivor: {MESSAGE}',
     message=MESSAGE,
     app_name='GamesVoice',
-    app_icon=None,
+    app_icon='icon.ico',
     timeout=10
 )
