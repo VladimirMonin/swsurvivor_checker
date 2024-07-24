@@ -48,3 +48,9 @@ python script.py
 ```sh
 pyinstaller --onefile main.py
 ```
+
+Команда упаковки в один файл, включая все дополнительные зависимости (библиотеки):
+
+```sh
+pyinstaller --onefile --hidden-import plyer.platforms.win.notification main.py
+```
