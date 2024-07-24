@@ -17,6 +17,7 @@
 import requests
 from bs4 import BeautifulSoup
 from plyer import notification
+import webbrowser
 
 URL = r'https://www.gamesvoice.ru/swsurvivor'
 XPATH = r'//*[@id="comp-lh1g6uej"]/h1/span/span/span/span'
@@ -45,6 +46,7 @@ if html.select(CSS_SELECTOR)[0].text == 'Этот русификатор пок�
 else:
     print('Русификатор доступен')
     MESSAGE = 'Русификатор доступен'
+    webbrowser.open(URL)  # Открываем сайт
 
 
 # Отправляем уведомление
@@ -57,3 +59,4 @@ notification.notify(
     app_icon='icon.ico',
     timeout=10
 )
+

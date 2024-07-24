@@ -53,4 +53,5 @@ pyinstaller --onefile main.py
 
 ```sh
 pyinstaller --onefile --hidden-import plyer.platforms.win.notification main.py
+pyinstaller --onefile --noconsole --hidden-import plyer.platforms.win.notification main.py #TODO Тестить!
 ```
