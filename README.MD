@@ -8,11 +8,12 @@
 - requests
 - beautifulsoup4
 - plyer
+- pyinstaller
 
 Установите их командой:
 
 ```sh
-pip install requests beautifulsoup4 plyer
+pip install -r requirements.txt
 ```
 
 ## Запуск скрипта
@@ -20,8 +21,10 @@ pip install requests beautifulsoup4 plyer
 Для запуска скрипта выполните команду:
 
 ```sh
-python script.py
+python main.py
 ```
+
+Чтобы скрипт 
 
 ## Автозагрузка в Windows 11
 
@@ -49,9 +52,11 @@ python script.py
 pyinstaller --onefile main.py
 ```
 
-Команда упаковки в один файл, включая все дополнительные зависимости (библиотеки):
+Команда упаковки в один файл, включая все дополнительные зависимости (библиотеки), без которых прошлый вариант сборки может не работать:
 
 ```sh
 pyinstaller --onefile --hidden-import plyer.platforms.win.notification main.py
-pyinstaller --onefile --noconsole --hidden-import plyer.platforms.win.notification main.py #TODO Тестить!
+pyinstaller --onefile --noconsole --hidden-import plyer.platforms.win.notification main.py # Без консоли при запуске
 ```
+
+Не забудьте положить иконку рядом с исполняемым файлом, она ему нужна для запуска.
