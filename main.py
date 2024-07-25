@@ -1,18 +1,18 @@
 """
-# Скрипт который заходит на сайт https://www.gamesvoice.ru/swsurvivor
-# И проверяет наличие текста "Этот русификатор пока ещё недоступен"
-В элементе //*[@id="comp-lh1g6uej"]/h1/span/span/span/span
+Проверяем, вышла ли русская локализация для игры Star Wars Jedi: Survivor
+
+Скрипт который заходит на сайт https://www.gamesvoice.ru/swsurvivor
+И проверяет наличие текста "Этот русификатор пока ещё недоступен"
 
 Через библиотеку requests и beautifulsoup
-# pip install requests
-# pip install beautifulsoup4
 
-Скриптовый стиль!
-
+Так же, используется библиотека plyer для отправки уведомлений на рабочий стол
 Библиотека для системных уведомлений plyer
-# pip install plyer
-"""
 
+И библиотека webbrowser для открытия сайта в браузере, в случае если русификатор доступен.
+
+После, скрипт упаковывается в exe файл с помощью pyinstaller, флаги описаны в README.md
+"""
 
 import requests
 from bs4 import BeautifulSoup
@@ -29,16 +29,20 @@ response = requests.get(URL)
 
 # Проверяем статус ответа
 if response.status_code == 200:
-    print('Успех. Сайт доступен')
+    print('Сайт доступен')
 else:
     print('Ошибка. Сайт недоступен')
     exit()
 
-# Анализируем полученный ответ, с помощью парсера, ищем элемент css Selector #comp-lh1g6uej > h1 > span > span > span > span
-html = BeautifulSoup(response.text, 'html.parser')
+# Получаем HTML из ответа
+html = response.text
+
+# Создаем объект BeautifulSoup для возможности парсинга данных из HTML
+bs4 = BeautifulSoup(html, 'html.parser')
 
 # Проверяем наличие текста "Этот русификатор пока ещё недоступен" в элементе СSS_SELECTOR
-if html.select(CSS_SELECTOR)[0].text == 'Этот русификатор пока ещё недоступен':
+# Метод select возращает список элементов, поэтому обращаемся к первому элементу
+if bs4.select(CSS_SELECTOR)[0].text == 'Этот русификатор пока ещё недоступен':
     print('Русификатор еще не доступен')
 
     MESSAGE = 'Русификатор еще не доступен'
@@ -50,8 +54,6 @@ else:
 
 
 # Отправляем уведомление
-
-
 notification.notify(
     title=f'Star Wars Jedi: Survivor: {MESSAGE}',
     message=MESSAGE,
